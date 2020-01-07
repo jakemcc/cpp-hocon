@@ -7,7 +7,6 @@
 #include "path.hpp"
 #include <string>
 #include <vector>
-#include "export.h"
 #include <leatherman/locale/locale.hpp>
 
 namespace hocon {

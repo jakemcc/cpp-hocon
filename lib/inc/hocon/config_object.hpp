@@ -4,7 +4,6 @@
 #include "config_mergeable.hpp"
 #include "path.hpp"
 #include <unordered_map>
-#include "export.h"
 
 namespace hocon {
 

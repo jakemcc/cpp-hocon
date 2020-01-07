@@ -2,7 +2,6 @@
 
 #include "types.hpp"
 #include "config_syntax.hpp"
-#include "export.h"
 
 namespace hocon {
     /**

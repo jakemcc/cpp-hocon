@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include "../export.h"
 
 namespace hocon {
     /**

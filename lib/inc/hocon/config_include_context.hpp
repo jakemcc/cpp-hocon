@@ -2,7 +2,6 @@
 
 #include "types.hpp"
 #include "config_parse_options.hpp"
-#include "export.h"
 
 namespace hocon {
 

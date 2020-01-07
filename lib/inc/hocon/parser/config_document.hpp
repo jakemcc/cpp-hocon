@@ -3,7 +3,6 @@
 #include <string>
 #include <memory>
 #include <hocon/config_value.hpp>
-#include "../export.h"
 
 namespace hocon {
     /**

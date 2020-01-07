@@ -12,7 +12,6 @@
 #include <vector>
 #include <string>
 #include <set>
-#include "export.h"
 #include <leatherman/locale/locale.hpp>
 
 namespace hocon {

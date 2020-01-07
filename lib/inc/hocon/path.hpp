@@ -6,7 +6,6 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "export.h"
 
 namespace hocon {
 

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "export.h"
 
 namespace hocon {
 

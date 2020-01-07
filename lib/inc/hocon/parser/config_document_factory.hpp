@@ -2,7 +2,6 @@
 
 #include "config_document.hpp"
 #include <hocon/config_parse_options.hpp>
-#include "../export.h"
 
 /**
  * Factory for creating config_document instances.
