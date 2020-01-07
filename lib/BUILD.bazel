@@ -8,6 +8,5 @@ cc_library(
   deps = ["//external:leatherman",
           "//external:boost"],
   includes = ["inc"],
-  local_defines = ["LIBCPP_HOCON_EXPORT="],
   visibility = ["//visibility:public"]
 )

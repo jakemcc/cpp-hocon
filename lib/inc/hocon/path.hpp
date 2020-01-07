@@ -9,7 +9,7 @@
 
 namespace hocon {
 
-    class LIBCPP_HOCON_EXPORT path {
+    class path {
     public:
         path();
         explicit path(std::string first, path const& remainder);

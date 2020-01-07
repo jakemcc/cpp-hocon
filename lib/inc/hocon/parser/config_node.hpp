@@ -17,7 +17,7 @@ namespace hocon {
      * Also, this interface is likely to grow new methods over time, so third-party
      * implementations will break.
      */
-    class LIBCPP_HOCON_EXPORT config_node {
+    class config_node {
     public:
         /**
          * The original text of the input which was used to form this particular

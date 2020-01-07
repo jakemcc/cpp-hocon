@@ -4,7 +4,7 @@
 #include <string>
 
 namespace hocon {
-    class LIBCPP_HOCON_EXPORT config_value_factory {
+    class config_value_factory {
          public:
          /**
           * Creates a {@link ConfigValue} from a plain value, which may be

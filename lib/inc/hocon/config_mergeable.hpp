@@ -4,7 +4,7 @@
 
 namespace hocon {
 
-    class LIBCPP_HOCON_EXPORT config_mergeable {
+    class config_mergeable {
         friend class config_value;
     public:
         /**
