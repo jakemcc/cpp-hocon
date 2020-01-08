@@ -5,10 +5,14 @@
 #include <internal/config_document_parser.hpp>
 #include <sstream>
 #include <boost/algorithm/string.hpp>
-#include <leatherman/locale/locale.hpp>
+#include <fmt/format.h>
 
-// Mark string for translation (alias for leatherman::locale::format)
-using leatherman::locale::_;
+template<typename... TArgs>
+inline std::string _(std::string const& fmt, TArgs&&... args)
+{
+  return fmt::format(std::forward<decltype(fmt)>(fmt), std::forward<TArgs>(args)...);
+}
+
 
 using namespace std;
 
@@ -20,7 +24,7 @@ namespace hocon {
     unique_ptr<config_document> simple_config_document::with_value_text(string path, string new_value) const
     {
         if (new_value.empty()) {
-            throw new config_exception(_("empty value for {1} passed to with_value_text", path));
+            throw new config_exception(_("empty value for {0} passed to with_value_text", path));
         }
 
         shared_origin origin = make_shared<simple_config_origin>("single value parsing");
@@ -36,7 +40,7 @@ namespace hocon {
                                                                    shared_ptr<config_value> new_value) const
     {
         if (!new_value) {
-            throw config_exception(_("null value for {1} passed to with_value", path));
+            throw config_exception(_("null value for {0} passed to with_value", path));
         }
         config_render_options options = config_render_options();
         options = options.set_origin_comments(false);

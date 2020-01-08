@@ -7,7 +7,6 @@
 #include "path.hpp"
 #include <string>
 #include <vector>
-#include <leatherman/locale/locale.hpp>
 
 namespace hocon {
 
@@ -64,7 +63,7 @@ namespace hocon {
                 case type::CONFIG_NULL: return "null";
                 case type::STRING: return "string";
                 case type::UNSPECIFIED: return "unspecified";
-                default: throw std::logic_error(leatherman::locale::format("Got impossible value for type enum"));
+                default: throw std::logic_error("Got impossible value for type enum");
             }
         }
 

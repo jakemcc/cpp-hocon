@@ -10,10 +10,6 @@
 #include <unordered_set>
 #include <boost/algorithm/string.hpp>
 #include <internal/tokens.hpp>
-#include <leatherman/locale/locale.hpp>
-
-// Mark string for translation (alias for leatherman::locale::format)
-using leatherman::locale::_;
 
 using namespace std;
 
@@ -162,7 +158,7 @@ namespace hocon {
 
     shared_object simple_config_object::with_value(std::string key, shared_value value) const {
         if (!value) {
-            throw config_exception(_("Trying to store null config_value in a config_object"));
+            throw config_exception("Trying to store null config_value in a config_object");
         }
 
         unordered_map<string, shared_value> new_map;
@@ -294,7 +290,7 @@ namespace hocon {
                                                          ignores_fallbacks());
             }
         }
-        throw bug_or_broken_exception(_("simple_config_object::replace_child did not find {1}", child->render()));
+        throw bug_or_broken_exception(fmt::format("simple_config_object::replace_child did not find {0}", child->render()));
     }
 
     bool simple_config_object::has_descendant(shared_value const &descendant) const {
@@ -358,7 +354,7 @@ namespace hocon {
     shared_value simple_config_object::merged_with_object(shared_object abstract_fallback) const {
         auto fallback = dynamic_pointer_cast<const simple_config_object>(abstract_fallback);
         if (!fallback) {
-            throw bug_or_broken_exception(_("should not be reached (merging non-simple_config_object)"));
+          throw bug_or_broken_exception("should not be reached (merging non-simple_config_object)");
         }
 
         bool changed = false;
@@ -383,7 +379,7 @@ namespace hocon {
                 } else {
                     const auto merge = dynamic_pointer_cast<const config_value>(first->second->with_fallback(second->second));
                     if (!merge) {
-                        throw bug_or_broken_exception(_("Expected with_fallback to return same type of object"));
+                        throw bug_or_broken_exception("Expected with_fallback to return same type of object");
                     }
                     return merge;
                 }

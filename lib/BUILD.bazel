@@ -5,9 +5,10 @@ cc_library(
   srcs = glob(["src/*.cc", "src/nodes/*.cc", "src/values/*.cc",
                "inc/internal/*.hpp", "inc/internal/nodes/*.hpp", "inc/internal/values/*.hpp"]),
   hdrs = glob(["inc/hocon/*.hpp", "inc/hocon/parser/*.hpp"]),
-  copts = ["-pthread"],
-  deps = ["@com_github_puppetlabs_leatherman//:leatherman",
-          #"//external:boost_all",
+  copts = ["-pthread", "-std=c++2a"],
+  deps = ["@com_github_fmtlib_fmt//:fmtlib",
+          "@com_github_puppetlabs_leatherman//:leatherman",
+
           "@boost//:locale",
           "@boost//:regex",
 

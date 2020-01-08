@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <string>
 #include "config_origin.hpp"
-#include <leatherman/locale/locale.hpp>
+#include <fmt/format.h>
 
 namespace hocon {
 
@@ -13,10 +13,10 @@ namespace hocon {
      */
     struct config_exception : public std::runtime_error {
         config_exception(config_origin const& origin, std::string const& message) :
-                runtime_error(leatherman::locale::format("{1}: {2}", origin.description(), message)) { }
+                runtime_error(fmt::format("{0}: {1}", origin.description(), message)) { }
         config_exception(std::string const& message) : runtime_error(message) { }
 
-        config_exception(std::string const& message, std::exception const& e) : runtime_error(leatherman::locale::format("{1} {2}", message, e.what())) { }
+        config_exception(std::string const& message, std::exception const& e) : runtime_error(fmt::format("{0} {1}", message, e.what())) { }
     };
 
     /**
@@ -27,7 +27,7 @@ namespace hocon {
     struct wrong_type_exception : public config_exception {
         wrong_type_exception(config_origin const& origin,
                              std::string const& path, std::string const& expected, std::string const& actual) :
-                config_exception(origin, leatherman::locale::format("{1} has type {2} rather than {3}", path, actual, expected)) { }
+                config_exception(origin, fmt::format("{0} has type {1} rather than {2}", path, actual, expected)) { }
         using config_exception::config_exception;
     };
 
@@ -37,7 +37,7 @@ namespace hocon {
      */
     struct missing_exception : public config_exception {
         missing_exception(std::string const& path) :
-                config_exception(leatherman::locale::format("No configuration setting found for key '{1}'", path)) { }
+                config_exception(fmt::format("No configuration setting found for key '{0}'", path)) { }
         using config_exception::config_exception;
     };
 
@@ -47,8 +47,8 @@ namespace hocon {
      */
     struct null_exception : public missing_exception {
         null_exception(config_origin const& origin, std::string const& path, std::string const& expected = "") :
-                missing_exception(origin, (expected.empty() ? leatherman::locale::format("Configuration key \"{1}\" is null", path)
-                                           : leatherman::locale::format("Configuration key \"{1}\" is set to null but expected {2}", path, expected))) { }
+                missing_exception(origin, (expected.empty() ? fmt::format("Configuration key \"{0}\" is null", path)
+                                           : fmt::format("Configuration key \"{0}\" is set to null but expected {1}", path, expected))) { }
     };
 
     /**
@@ -58,9 +58,9 @@ namespace hocon {
      */
     struct bad_value_exception : public config_exception {
         bad_value_exception(config_origin const& origin, std::string const& path, std::string const& message) :
-                config_exception(origin, leatherman::locale::format("Invalid value at '{1}': {2}", path, message)) { }
+                config_exception(origin, fmt::format("Invalid value at '{0}': {1}", path, message)) { }
         bad_value_exception(std::string const& path, std::string const& message) :
-                config_exception(leatherman::locale::format("Invalid value at '{1}': {2}", path, message)) { }
+                config_exception(fmt::format("Invalid value at '{0}': {1}", path, message)) { }
     };
 
     /**
@@ -70,9 +70,9 @@ namespace hocon {
      */
     struct bad_path_exception : public config_exception {
         bad_path_exception(config_origin const& origin, std::string const& path, std::string const& message) :
-                config_exception(origin, path.empty() ? message : leatherman::locale::format("Invalid path '{1}': {2}", path, message)) { }
+                config_exception(origin, path.empty() ? message : fmt::format("Invalid path '{0}': {1}", path, message)) { }
         bad_path_exception(std::string const& path, std::string const& message) :
-                config_exception(path.empty() ? message : leatherman::locale::format("Invalid path '{1}': {2}", path, message)) { }
+                config_exception(path.empty() ? message : fmt::format("Invalid path '{0}': {1}", path, message)) { }
     };
 
     /**
@@ -109,7 +109,7 @@ namespace hocon {
      */
     struct unresolved_substitution_exception : public parse_exception {
         unresolved_substitution_exception(config_origin const& origin, std::string const& detail) :
-                parse_exception(origin, leatherman::locale::format("Could not resolve subtitution to a value: {1}", detail)) { }
+                parse_exception(origin, fmt::format("Could not resolve subtitution to a value: {0}", detail)) { }
     };
 
     /**
@@ -142,7 +142,7 @@ namespace hocon {
         const std::string problem;
 
         std::string to_string() {
-            return leatherman::locale::format("ValidationProblem({1},{2},{3})", path, origin->description(), problem);
+            return fmt::format("ValidationProblem({0},{1},{2})", path, origin->description(), problem);
         }
     };
 
@@ -168,7 +168,7 @@ namespace hocon {
                 }
             }
             if (msg.empty()) {
-                throw bug_or_broken_exception(leatherman::locale::format("validation_failed_exception must have a non-empty list of problems"));
+                throw bug_or_broken_exception(fmt::format("validation_failed_exception must have a non-empty list of problems"));
             }
             msg.resize(msg.length() - 2);
             return msg;

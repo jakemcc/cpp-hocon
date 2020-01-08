@@ -3,10 +3,13 @@
 #include <internal/nodes/config_node_array.hpp>
 #include <internal/nodes/config_node_object.hpp>
 #include <internal/path_parser.hpp>
-#include <leatherman/locale/locale.hpp>
+#include <fmt/format.h>
 
-// Mark string for translation (alias for leatherman::locale::format)
-using leatherman::locale::_;
+template<typename... TArgs>
+inline std::string _(std::string const& fmt, TArgs&&... args)
+{
+  return fmt::format(std::forward<decltype(fmt)>(fmt), std::forward<TArgs>(args)...);
+}
 
 using namespace std;
 

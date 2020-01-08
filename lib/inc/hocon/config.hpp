@@ -12,7 +12,6 @@
 #include <vector>
 #include <string>
 #include <set>
-#include <leatherman/locale/locale.hpp>
 
 namespace hocon {
 
@@ -581,7 +580,7 @@ namespace hocon {
                 try {
                     T_list.push_back(boost::get<T>(item));
                 } catch (boost::bad_get &ex) {
-                    throw config_exception(leatherman::locale::format("The list did not contain only the desired type."));
+                    throw config_exception("The list did not contain only the desired type.");
                 }
             }
             return T_list;

@@ -18,12 +18,15 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string/trim.hpp>
 #include <leatherman/util/environment.hpp>
-#include <leatherman/locale/locale.hpp>
+#include <fmt/format.h>
 
 #include <cfenv>
 
-// Mark string for translation (alias for leatherman::locale::format)
-using leatherman::locale::_;
+template<typename... TArgs>
+inline std::string _(std::string const& fmt, TArgs&&... args)
+{
+  return fmt::format(std::forward<decltype(fmt)>(fmt), std::forward<TArgs>(args)...);
+}
 
 using namespace std;
 
@@ -89,7 +92,7 @@ namespace hocon {
             if (_object->get_resolve_status() == resolve_status::RESOLVED) {
                 throw ex;
             }
-            throw config_exception(_("{1} has not been resolved, you need to call config::resolve()", raw_path.render()));
+            throw config_exception(_("{} has not been resolved, you need to call config::resolve()", raw_path.render()));
         }
         return peeked;
     }
@@ -161,7 +164,7 @@ namespace hocon {
         if (expected != config_value::type::UNSPECIFIED &&
                 v->value_type() != expected &&
                 v->value_type() != config_value::type::CONFIG_NULL) {
-            throw wrong_type_exception(_("{1} could not be converted to the requested type", original_path.render()));
+            throw wrong_type_exception(_("{} could not be converted to the requested type", original_path.render()));
         } else {
             return v;
         }
@@ -184,7 +187,7 @@ namespace hocon {
             if (self->get_resolve_status() == resolve_status::RESOLVED) {
                 throw ex;
             }
-            throw config_exception(_("{1} has not been resolved, you need to call config::resolve()", desired_path.render()));
+            throw config_exception(_("{} has not been resolved, you need to call config::resolve()", desired_path.render()));
         }
     }
 
@@ -324,7 +327,7 @@ namespace hocon {
         } else if (auto str = dynamic_pointer_cast<const config_string>(v)) {
             return parse_duration(str->transform_to_string(), str->origin(), path);
         } else {
-            throw bad_value_exception(*v->origin(), path, _("Value at '{1}' was not a number or string.", path));
+            throw bad_value_exception(*v->origin(), path, _("Value at '{}' was not a number or string.", path));
         }
     }
 
@@ -456,7 +459,7 @@ namespace hocon {
         } else if (unit_string == "d" || unit_string == "days") {
             return time_unit::DAYS;
         } else {
-            throw config_exception(_("Could not parse time unit '{1}' (try ns, us, ms, s, m, h, or d)", unit_string));
+            throw config_exception(_("Could not parse time unit '{}' (try ns, us, ms, s, m, h, or d)", unit_string));
         }
     }
 
@@ -467,7 +470,7 @@ namespace hocon {
         string number_string = boost::algorithm::trim_copy(input.substr(0, input.length() - unit_string.length()));
 
         if (number_string.empty()) {
-            throw bad_value_exception(*origin_for_exception, path_for_exception, _("No number in duration value '{1}'", input));
+            throw bad_value_exception(*origin_for_exception, path_for_exception, _("No number in duration value '{}'", input));
         }
 
         if (unit_string.length() > 2 && unit_string.back() != 's') {
@@ -483,7 +486,7 @@ namespace hocon {
                 return convert(number, get_units(unit_string));
             }
             catch (boost::bad_lexical_cast& ex) {
-                throw bad_value_exception(*origin_for_exception, path_for_exception, _("Value '{1}' could not be converted to a number.", number_string));
+                throw bad_value_exception(*origin_for_exception, path_for_exception, _("Value '{}' could not be converted to a number.", number_string));
             }
         }
     }
