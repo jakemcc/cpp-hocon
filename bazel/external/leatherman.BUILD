@@ -11,7 +11,15 @@ cc_library(
           "lib/leatherman_ruby.a"],
   hdrs = glob(["include/**/*.hpp"]),
   includes = ["include"],
-  deps = ["@org_boost_boost//:all"],
+  deps = [#"@org_boost_boost//:all"
+    "@boost//:locale",
+    "@boost//:system",
+    # "@boost//:nowide",
+    # "@boost//:nowide",
+    "@boost//:date_time",
+    "@boost//:chrono",
+    "@boost//:format",
+  ],
   visibility = ["//visibility:public"],
 )
 

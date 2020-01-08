@@ -12,7 +12,7 @@ def load_dependencies(skip_targets = []):
 
     _com_github_catch2()
 
-    _org_boost_boost()
+    # _org_boost_boost()
     _com_github_puppetlabs_leatherman()
     # _com_github_puppetlabs_cpp_hocon()
 
