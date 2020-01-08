@@ -17,7 +17,6 @@
 
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string/trim.hpp>
-#include <leatherman/util/environment.hpp>
 #include <fmt/format.h>
 
 #include <cfenv>
@@ -27,6 +26,9 @@ inline std::string _(std::string const& fmt, TArgs&&... args)
 {
   return fmt::format(std::forward<decltype(fmt)>(fmt), std::forward<TArgs>(args)...);
 }
+
+extern char **environ;
+
 
 using namespace std;
 
@@ -561,9 +563,30 @@ namespace hocon {
         return throw_if_null(find_or_null(_object, path_expression, expected, original_path), expected, original_path);
     }
 
+  void foreach_environment_var(function<bool(string&, string&)> callback)
+  {
+    // Enumerate all environment variables
+    for (char const* const* variable = environ; *variable; ++variable) {
+      string pair = *variable;
+      string name;
+      string value;
+
+      auto pos = pair.find('=');
+      if (pos == string::npos) {
+        name = move(pair);
+      } else {
+        name = pair.substr(0, pos);
+        value = pair.substr(pos + 1);
+      }
+      if (!callback(name, value)) {
+        break;
+      }
+    }
+  }
+
     shared_object config::env_variables_as_config_object() {
         unordered_map<string, shared_value> values;
-        leatherman::util::environment::each([&](string& k, string& v) {
+        foreach_environment_var([&](string& k, string& v) {
             auto origin = make_shared<simple_config_origin>("env var " + k);
             values.emplace(k, make_shared<config_string>(origin, v, config_string_type::QUOTED));
             return true;
