@@ -17,12 +17,18 @@
 #pragma GCC diagnostic pop
 #include <vector>
 #include <numeric>
-#include <leatherman/util/scope_exit.hpp>
 #include <boost/filesystem.hpp>
 
 using namespace std;
 
 namespace hocon {
+
+  struct scope_exit {
+    scope_exit(std::function<void()>&& f) : _f(f) {}
+    ~scope_exit() { _f(); }
+  private:
+    std::function<void()> _f;
+  };
 
     const int parseable::MAX_INCLUDE_DEPTH = 50;
 
@@ -162,7 +168,7 @@ namespace hocon {
         }
 
         pstack->push_back(shared_from_this());
-        leatherman::util::scope_exit([&]() {
+        scope_exit on_exit([&]() {
             pstack->pop_back();
             if (pstack->empty()) {
                 parse_stack.reset();
