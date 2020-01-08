@@ -343,59 +343,59 @@ TEST_CASE("concatenation") {
     }
 }
 
-// TEST_CASE("Concatenation pending '+=' implementation", "[!shouldfail]") {
-//     // TODO: emptyArrayPlusEquals
-//     // TODO: missingArrayPlusEquals
-//     // TODO: shortArrayPlusEquals
-//     // You guessed it, these need a good story around pulling arrays out
+TEST_CASE("Concatenation pending '+=' implementation", "[!shouldfail]") {
+    // TODO: emptyArrayPlusEquals
+    // TODO: missingArrayPlusEquals
+    // TODO: shortArrayPlusEquals
+    // You guessed it, these need a good story around pulling arrays out
 
-//     SECTION("can't concatenate numbers as an array using +=") {
-//         bool thrown = false;
-//         try {
-//             auto conf = parse_config(R"(a = 10, a += 2)")->resolve();
-//         } catch (const hocon::config_exception& e) {
-//             thrown = true;
-//             REQUIRE_STRING_CONTAINS(e.what(), "Cannot concatenate");
-//             REQUIRE_STRING_CONTAINS(e.what(), "10");
-//             REQUIRE_STRING_CONTAINS(e.what(), "[2]");
-//         }
-//         REQUIRE(thrown);
-//     }
+    SECTION("can't concatenate numbers as an array using +=") {
+        bool thrown = false;
+        try {
+            auto conf = parse_config(R"(a = 10, a += 2)")->resolve();
+        } catch (const hocon::config_exception& e) {
+            thrown = true;
+            REQUIRE_STRING_CONTAINS(e.what(), "Cannot concatenate");
+            REQUIRE_STRING_CONTAINS(e.what(), "10");
+            REQUIRE_STRING_CONTAINS(e.what(), "[2]");
+        }
+        REQUIRE(thrown);
+    }
 
-//     SECTION("can't concatenate strings with an array using +=") {
-//         bool thrown = false;
-//         try {
-//             auto conf = parse_config(R"(a = "abc", a += 2)")->resolve();
-//         } catch (const hocon::config_exception& e) {
-//             thrown = true;
-//             REQUIRE_STRING_CONTAINS(e.what(), "Cannot concatenate");
-//             REQUIRE_STRING_CONTAINS(e.what(), "abc");
-//             REQUIRE_STRING_CONTAINS(e.what(), "[2]");
-//         }
-//         REQUIRE(thrown);
-//     }
+    SECTION("can't concatenate strings with an array using +=") {
+        bool thrown = false;
+        try {
+            auto conf = parse_config(R"(a = "abc", a += 2)")->resolve();
+        } catch (const hocon::config_exception& e) {
+            thrown = true;
+            REQUIRE_STRING_CONTAINS(e.what(), "Cannot concatenate");
+            REQUIRE_STRING_CONTAINS(e.what(), "abc");
+            REQUIRE_STRING_CONTAINS(e.what(), "[2]");
+        }
+        REQUIRE(thrown);
+    }
 
-//     SECTION("can't concatenate objectss with an array using +=") {
-//         bool thrown = false;
-//         try {
-//             auto conf = parse_config(R"(a = { x : y }, a += 2)")->resolve();
-//         } catch (const hocon::config_exception& e) {
-//             thrown = true;
-//             REQUIRE_STRING_CONTAINS(e.what(), "Cannot concatenate");
-//             REQUIRE_STRING_CONTAINS(e.what(), R"("x":"y")");
-//             REQUIRE_STRING_CONTAINS(e.what(), "[2]");
-//         }
-//         REQUIRE(thrown);
-//     }
+    SECTION("can't concatenate objectss with an array using +=") {
+        bool thrown = false;
+        try {
+            auto conf = parse_config(R"(a = { x : y }, a += 2)")->resolve();
+        } catch (const hocon::config_exception& e) {
+            thrown = true;
+            REQUIRE_STRING_CONTAINS(e.what(), "Cannot concatenate");
+            REQUIRE_STRING_CONTAINS(e.what(), R"("x":"y")");
+            REQUIRE_STRING_CONTAINS(e.what(), "[2]");
+        }
+        REQUIRE(thrown);
+    }
 
-//     // TODO: plusEqualsNestedPath
-//     // TODO: plusEqualsNestedObjects
-//     // TODO: plusEqualsSingleNestedObject
-//     // TOOD: substitutionPlusEqualsSubstitution
-//     // TODO: plusEqualsMultipleTimes
-//     // TOOD: plusEqualsMultipleTimesNested
-//     // TODO: plusEqualsAnObjectMultipleTimes
-//     // TODO: plusEqualsAnObjectMultipleTimesNested
-//     // TOOD: plusEqualsMultipleTimesNestedInArray
-//     // TODO: plusEqualsMultipleTimesNestedInPlusEquals
-// }
+    // TODO: plusEqualsNestedPath
+    // TODO: plusEqualsNestedObjects
+    // TODO: plusEqualsSingleNestedObject
+    // TOOD: substitutionPlusEqualsSubstitution
+    // TODO: plusEqualsMultipleTimes
+    // TOOD: plusEqualsMultipleTimesNested
+    // TODO: plusEqualsAnObjectMultipleTimes
+    // TODO: plusEqualsAnObjectMultipleTimesNested
+    // TOOD: plusEqualsMultipleTimesNestedInArray
+    // TODO: plusEqualsMultipleTimesNestedInPlusEquals
+}
