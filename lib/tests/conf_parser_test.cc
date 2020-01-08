@@ -271,38 +271,38 @@ static void line_number_test(int num, string text) {
     }
 }
 
-TEST_CASE("line numbers in errors (pending)", "[!shouldfail]") {
-    // error is at the last char
-    line_number_test(1, "}");
-    line_number_test(2, "\n}");
-    line_number_test(3, "\n\n}");
+// TEST_CASE("line numbers in errors (pending)", "[!shouldfail]") {
+//     // error is at the last char
+//     line_number_test(1, "}");
+//     line_number_test(2, "\n}");
+//     line_number_test(3, "\n\n}");
 
-    // error is before a final newline
-    line_number_test(1, "}\n");
-    line_number_test(2, "\n}\n");
-    line_number_test(3, "\n\n}\n");
+//     // error is before a final newline
+//     line_number_test(1, "}\n");
+//     line_number_test(2, "\n}\n");
+//     line_number_test(3, "\n\n}\n");
 
-    // with unquoted string
-    line_number_test(1, "foo");
-    line_number_test(2, "\nfoo");
-    line_number_test(3, "\n\nfoo");
+//     // with unquoted string
+//     line_number_test(1, "foo");
+//     line_number_test(2, "\nfoo");
+//     line_number_test(3, "\n\nfoo");
 
-    // with quoted string
-    line_number_test(1, "\"foo\"");
-    line_number_test(2, "\n\"foo\"");
-    line_number_test(3, "\n\n\"foo\"");
+//     // with quoted string
+//     line_number_test(1, "\"foo\"");
+//     line_number_test(2, "\n\"foo\"");
+//     line_number_test(3, "\n\n\"foo\"");
 
-    // newlines in triple-quoted string should not hose up the numbering
-    line_number_test(1, "a : \"\"\"foo\"\"\"}");
-    line_number_test(2, "a : \"\"\"foo\n\"\"\"}");
-    line_number_test(3, "a : \"\"\"foo\nbar\nbaz\"\"\"}");
-    //   newlines after the triple quoted string
-    line_number_test(5, "a : \"\"\"foo\nbar\nbaz\"\"\"\n\n}");
-    //   triple quoted string ends in a newline
-    line_number_test(6, "a : \"\"\"foo\nbar\nbaz\n\"\"\"\n\n}");
-    //   end in the middle of triple-quoted string
-    line_number_test(5, "a : \"\"\"foo\n\n\nbar\n");
-}
+//     // newlines in triple-quoted string should not hose up the numbering
+//     line_number_test(1, "a : \"\"\"foo\"\"\"}");
+//     line_number_test(2, "a : \"\"\"foo\n\"\"\"}");
+//     line_number_test(3, "a : \"\"\"foo\nbar\nbaz\"\"\"}");
+//     //   newlines after the triple quoted string
+//     line_number_test(5, "a : \"\"\"foo\nbar\nbaz\"\"\"\n\n}");
+//     //   triple quoted string ends in a newline
+//     line_number_test(6, "a : \"\"\"foo\nbar\nbaz\n\"\"\"\n\n}");
+//     //   end in the middle of triple-quoted string
+//     line_number_test(5, "a : \"\"\"foo\n\n\nbar\n");
+// }
 
 TEST_CASE("to string for parseables") {
     // just be sure the to_string don't throw, to get test coverage
@@ -593,37 +593,37 @@ TEST_CASE("track comments for multiple fields") {
 }
 
 // TODO: this test used to fail due to an unimplemented method. Now it seems to reveal a bug in comment handling.
-TEST_CASE("track comments for multiple fields (pending)", "[!shouldfail]") {
-    // properties-like syntax
-    auto conf8 = parse_config(R"(
-            # ignored comment
+// TEST_CASE("track comments for multiple fields (pending)", "[!shouldfail]") {
+//     // properties-like syntax
+//     auto conf8 = parse_config(R"(
+//             # ignored comment
 
-            # x.y comment
-            x.y = 10
-            # x.z comment
-            x.z = 11
-            # x.a comment
-            x.a = 12
-            # a.b comment
-            a.b = 14
-            a.c = 15
-            a.d = 16 # a.d comment
-            # ignored comment
-            )");
+//             # x.y comment
+//             x.y = 10
+//             # x.z comment
+//             x.z = 11
+//             # x.a comment
+//             x.a = 12
+//             # a.b comment
+//             a.b = 14
+//             a.c = 15
+//             a.d = 16 # a.d comment
+//             # ignored comment
+//             )");
 
-    assert_comments({" x.y comment"}, conf8, "x.y");
-    assert_comments({" x.z comment"}, conf8, "x.z");
-    assert_comments({" x.a comment"}, conf8, "x.a");
-    assert_comments({" a.b comment"}, conf8, "a.b");
-    assert_comments({}, conf8, "a.c");
-    assert_comments({" a.d comment"}, conf8, "a.d");
-    // here we're concerned that comments apply only to leaf
-    // nodes, not to parent objects.
+//     assert_comments({" x.y comment"}, conf8, "x.y");
+//     assert_comments({" x.z comment"}, conf8, "x.z");
+//     assert_comments({" x.a comment"}, conf8, "x.a");
+//     assert_comments({" a.b comment"}, conf8, "a.b");
+//     assert_comments({}, conf8, "a.c");
+//     assert_comments({" a.d comment"}, conf8, "a.d");
+//     // here we're concerned that comments apply only to leaf
+//     // nodes, not to parent objects.
 
-    // TODO: comments are currently being applied to the root as well. Why?
-    assert_comments({}, conf8, "x");
-    assert_comments({}, conf8, "a");
-}
+//     // TODO: comments are currently being applied to the root as well. Why?
+//     assert_comments({}, conf8, "x");
+//     assert_comments({}, conf8, "a");
+// }
 
 TEST_CASE("include file") {
     auto conf = config::parse_string("include file(\"" + fixture_path("test01") + "\")");
