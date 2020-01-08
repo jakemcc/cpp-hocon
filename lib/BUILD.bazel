@@ -6,7 +6,7 @@ cc_library(
                "inc/internal/*.hpp", "inc/internal/nodes/*.hpp", "inc/internal/values/*.hpp"]),
   hdrs = glob(["inc/hocon/*.hpp", "inc/hocon/parser/*.hpp"]),
   copts = ["-pthread"],
-  deps = ["//external:leatherman",
+  deps = ["@com_github_puppetlabs_leatherman//:leatherman",
           #"//external:boost_all",
           "@boost//:locale",
           "@boost//:regex",
