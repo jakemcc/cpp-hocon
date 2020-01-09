@@ -7,8 +7,8 @@ cc_library(
   hdrs = glob(["inc/hocon/*.hpp", "inc/hocon/parser/*.hpp"]),
   copts = ["-pthread", "-std=c++2a"],
   deps = ["@com_github_fmtlib_fmt//:fmtlib",
-          "@com_github_puppetlabs_leatherman//:leatherman",
 
+          "@boost//:format",
           "@boost//:locale",
           "@boost//:regex",
 
